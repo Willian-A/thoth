@@ -1,0 +1,27 @@
+# Infra local de desenvolvimento: Redis e LiveKit em modo dev.
+# Uso: docker compose -f infra/docker-compose.yml up
+name: thoth
+
+services:
+  redis:
+    image: redis:8.8.4-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  livekit:
+    image: livekit/livekit-server:v1.13.11
+    command: --config /etc/livekit.yaml
+    volumes:
+      - ./livekit.yaml:/etc/livekit.yaml:ro
+    ports:
+      - "7880:7880" # HTTP e WebSocket (sinalização)
+      - "7881:7881" # WebRTC sobre TCP
+      - "50000-50100:50000-50100/udp" # WebRTC sobre UDP
+    depends_on:
+      redis:
+        condition: service_healthy
