@@ -39,9 +39,11 @@ Em desenvolvimento, o front chama a API por `/api`, que o Vite repassa para `loc
 | `pnpm typecheck` | Checa os tipos de todos os pacotes                                |
 | `pnpm lint`      | Biome (lint e formatação) e dependency-cruiser (regra de camadas) |
 | `pnpm format`    | Corrige formatação e imports                                      |
-| `pnpm test`      | Testes unitários e de componentes (Vitest)                        |
+| `pnpm test`      | Testes unitários, de integração e de componentes (Vitest)         |
 | `pnpm test:e2e`  | Testes ponta a ponta (Playwright), sobe API e web sozinho         |
 | `pnpm build`     | Build de produção de web e API                                    |
+
+Os testes de integração da API usam um Redis de verdade: suba o do docker compose antes de `pnpm test` (ou aponte `REDIS_URL` para outro).
 
 Para usar um Chromium já instalado nos testes ponta a ponta, defina `PW_CHROMIUM_PATH`.
 
@@ -51,10 +53,11 @@ Camadas em `apps/api/src`, checadas pelo dependency-cruiser:
 
 - `routes/`: HTTP; valida a entrada e chama um serviço.
 - `services/`: regra de negócio; depende só de `ports/` e de `@thoth/shared`.
-- `ports/`: interfaces (`Clock`, e nos próximos marcos `RoomStore`, `MediaGateway`...).
+- `ports/`: interfaces (`Clock`, `RoomStore`, `MediaGateway`, `RandomSource`).
 - `adapters/`: implementações das portas (Redis, LiveKit, relógio do sistema).
 - `jobs/`: workers que chamam serviços.
 - `app.ts`: monta a aplicação e injeta as dependências.
+- `testing/`: versões em memória das portas, usadas só nos testes.
 
 ## Contribuindo
 
