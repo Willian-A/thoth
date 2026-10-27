@@ -1,5 +1,7 @@
 ## Tarefa no Linear
 
+<!-- Uma única tarefa por PR. -->
+
 TOW-
 
 ## O que muda

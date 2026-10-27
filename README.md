@@ -58,6 +58,7 @@ Camadas em `apps/api/src`, checadas pelo dependency-cruiser:
 
 ## Contribuindo
 
-- Um PR por tarefa do Linear, com o identificador no título (ex.: `feat: criar sala (TOW-70)`).
+- **Um PR por tarefa:** cada PR resolve uma única tarefa do Linear, e cada tarefa vira um único PR. O identificador vai no título (ex.: `feat: criar sala (TOW-70)`).
+- Quando uma tarefa depende de outra ainda em revisão, o PR dela parte do branch da anterior e muda a base para a `main` depois do merge.
 - Títulos em Conventional Commits; merge por squash.
 - O hook de pre-commit roda o Biome nos arquivos alterados (ativado pelo `pnpm install`).
