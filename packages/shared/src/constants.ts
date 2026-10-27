@@ -11,3 +11,6 @@ export const SHARE_REQUEST_TTL_MS = 45 * 1000;
 
 export const NAME_MIN_LENGTH = 1;
 export const NAME_MAX_LENGTH = 30;
+
+/** Quantidade de letras do slug da sala (cerca de 47 bits de entropia). */
+export const SLUG_LENGTH = 10;
