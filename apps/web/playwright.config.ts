@@ -7,6 +7,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? "github" : "list",
+  // Conectar ao LiveKit pode levar alguns segundos.
+  expect: { timeout: 15_000 },
   use: {
     baseURL: `http://localhost:${port}`,
     trace: "on-first-retry",

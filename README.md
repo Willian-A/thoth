@@ -31,17 +31,19 @@ pnpm dev                                            # web em :5173, API em :3000
 
 Em desenvolvimento, o front chama a API por `/api`, que o Vite repassa para `localhost:3000`.
 
+Para testar uma sala: abra `http://localhost:5173`, clique em "Criar sala", entre com um nome e abra o mesmo link em outra janela anônima. As duas pessoas aparecem na lista de participantes.
+
 ## Scripts
 
-| Comando          | O que faz                                                         |
-| ---------------- | ----------------------------------------------------------------- |
-| `pnpm dev`       | Sobe web e API com recarga automática                             |
-| `pnpm typecheck` | Checa os tipos de todos os pacotes                                |
-| `pnpm lint`      | Biome (lint e formatação) e dependency-cruiser (regra de camadas) |
-| `pnpm format`    | Corrige formatação e imports                                      |
-| `pnpm test`      | Testes unitários, de integração e de componentes (Vitest)         |
-| `pnpm test:e2e`  | Testes ponta a ponta (Playwright), sobe API e web sozinho         |
-| `pnpm build`     | Build de produção de web e API                                    |
+| Comando          | O que faz                                                                                         |
+| ---------------- | ------------------------------------------------------------------------------------------------- |
+| `pnpm dev`       | Sobe web e API com recarga automática                                                             |
+| `pnpm typecheck` | Checa os tipos de todos os pacotes                                                                |
+| `pnpm lint`      | Biome (lint e formatação) e dependency-cruiser (regra de camadas)                                 |
+| `pnpm format`    | Corrige formatação e imports                                                                      |
+| `pnpm test`      | Testes unitários, de integração e de componentes (Vitest)                                         |
+| `pnpm test:e2e`  | Testes ponta a ponta (Playwright); sobe API e web sozinho, mas precisa de Redis e LiveKit rodando |
+| `pnpm build`     | Build de produção de web e API                                                                    |
 
 Os testes de integração da API usam um Redis de verdade: suba o do docker compose antes de `pnpm test` (ou aponte `REDIS_URL` para outro).
 
