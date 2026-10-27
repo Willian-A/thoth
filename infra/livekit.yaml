@@ -7,6 +7,9 @@ rtc:
   port_range_start: 50000
   port_range_end: 50100
   use_external_ip: false
+  # Anuncia 127.0.0.1 como candidato ICE. Sem isso o LiveKit anuncia o IP interno
+  # do container, que o navegador fora do Docker (inclusive no WSL) não alcança.
+  node_ip: 127.0.0.1
 redis:
   address: redis:6379
 keys:
