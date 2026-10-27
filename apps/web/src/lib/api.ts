@@ -4,6 +4,11 @@ import {
   type ErrorCode,
   type HealthResponse,
   healthResponseSchema,
+  type JoinRoomRequest,
+  type JoinRoomResponse,
+  joinRoomResponseSchema,
+  type RoomStatusResponse,
+  roomStatusResponseSchema,
 } from "@thoth/shared";
 
 const API_BASE = import.meta.env.VITE_API_URL ?? "/api";
@@ -35,4 +40,20 @@ export function getHealth(): Promise<HealthResponse> {
 
 export function createRoom(): Promise<CreateRoomResponse> {
   return request("/rooms", createRoomResponseSchema, { method: "POST" });
+}
+
+export function getRoom(slug: string): Promise<RoomStatusResponse> {
+  return request(`/rooms/${slug}`, roomStatusResponseSchema);
+}
+
+export function joinRoom(slug: string, body: JoinRoomRequest): Promise<JoinRoomResponse> {
+  return request(`/rooms/${slug}/token`, joinRoomResponseSchema, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export function errorCode(error: unknown): ErrorCode | "UNKNOWN" {
+  return error instanceof ApiError ? error.code : "UNKNOWN";
 }
