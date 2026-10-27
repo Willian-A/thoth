@@ -1,0 +1,4 @@
+#!/bin/sh
+# Formata e checa só os arquivos do commit. Ativado por `pnpm install` (script prepare).
+pnpm exec biome check --staged --write --no-errors-on-unmatched || exit 1
+git update-index --again
