@@ -8,3 +8,6 @@ playwright-report/
 test-results/
 *.log
 .DS_Store
+
+# Snapshot do Redis local
+dump.rdb
