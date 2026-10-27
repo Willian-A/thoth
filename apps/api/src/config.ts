@@ -13,6 +13,8 @@ const configSchema = z
     WEB_ORIGIN: z.string().url().default("http://localhost:5173"),
     REDIS_URL: z.string().url().default("redis://localhost:6379"),
     LIVEKIT_URL: z.string().url().default("ws://localhost:7880"),
+    /** Endereço do LiveKit visto pelo navegador, se for diferente do usado pela API. */
+    LIVEKIT_PUBLIC_URL: z.string().url().optional(),
     LIVEKIT_API_KEY: z.string().min(1).default(DEV_LIVEKIT_KEY),
     LIVEKIT_API_SECRET: z.string().min(32).default(DEV_LIVEKIT_SECRET),
   })
