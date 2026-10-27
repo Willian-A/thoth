@@ -4,6 +4,11 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { messages } from "../lib/messages.ts";
 import { fakeApi, renderAt } from "../testing/render.tsx";
 
+// A conexão com o LiveKit fica para o teste ponta a ponta.
+vi.mock("../features/room/room-session.tsx", () => ({
+  RoomSession: ({ session }: { session: { identity: string } }) => <p>sessão {session.identity}</p>,
+}));
+
 const waitingRoom = () =>
   Response.json({
     slug: "abcdefghij",
@@ -87,7 +92,7 @@ describe("RoomPage", () => {
     renderAt("/r/abc-defg-hij");
     expect(await screen.findByLabelText(messages.room.nameLabel)).toHaveValue("Ana");
     await userEvent.click(screen.getByRole("button", { name: messages.room.join }));
-    expect(await screen.findByText(messages.room.joined)).toBeInTheDocument();
+    expect(await screen.findByText("sessão p_1")).toBeInTheDocument();
     expect(body).toEqual({ name: "Ana", hostKey: "chave" });
   });
 });

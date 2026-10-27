@@ -5,6 +5,7 @@ import { type ReactNode, useState } from "react";
 import { useParams } from "react-router";
 import { JoinForm } from "../features/room/join-form.tsx";
 import { RoomNotFound } from "../features/room/room-not-found.tsx";
+import { RoomSession } from "../features/room/room-session.tsx";
 import { errorCode, getRoom } from "../lib/api.ts";
 import { messages } from "../lib/messages.ts";
 
@@ -16,6 +17,7 @@ export function RoomPage() {
 function Room({ slug }: { slug: string }) {
   const room = useQuery({ queryKey: ["room", slug], queryFn: () => getRoom(slug) });
   const [session, setSession] = useState<JoinRoomResponse | null>(null);
+  const [notice, setNotice] = useState<string>();
 
   if (room.isPending) {
     return (
@@ -38,11 +40,27 @@ function Room({ slug }: { slug: string }) {
   }
 
   if (session) {
-    // A conexão com o LiveKit e a lista de participantes chegam na TOW-72.
-    return <p role="status">{messages.room.joined}</p>;
+    return (
+      <RoomSession
+        session={session}
+        onLeave={(reason) => {
+          setSession(null);
+          setNotice(reason === "disconnected" ? messages.room.disconnected : undefined);
+        }}
+      />
+    );
   }
 
-  return <JoinForm slug={slug} onJoined={setSession} />;
+  return (
+    <JoinForm
+      slug={slug}
+      notice={notice}
+      onJoined={(joined) => {
+        setNotice(undefined);
+        setSession(joined);
+      }}
+    />
+  );
 }
 
 function Page({ children }: { children: ReactNode }) {
