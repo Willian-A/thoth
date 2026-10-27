@@ -1,5 +1,6 @@
-import { Button, Card } from "@heroui/react";
+import { Card } from "@heroui/react";
 import { ApiStatus } from "../features/home/api-status.tsx";
+import { CreateRoomButton } from "../features/home/create-room-button.tsx";
 import { messages } from "../lib/messages.ts";
 
 export function HomePage() {
@@ -11,9 +12,7 @@ export function HomePage() {
           <Card.Description>{messages.home.subtitle}</Card.Description>
         </Card.Header>
         <Card.Content className="flex flex-col gap-4">
-          <Button isDisabled>
-            {messages.home.createRoom} ({messages.home.comingSoon})
-          </Button>
+          <CreateRoomButton />
           <ApiStatus />
         </Card.Content>
       </Card>

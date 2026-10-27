@@ -5,7 +5,7 @@ export const messages = {
     title: "Compartilhe sua tela em segundos",
     subtitle: "Crie uma sala, envie o link e mostre sua tela. Sem cadastro, sem câmera, sem microfone.",
     createRoom: "Criar sala",
-    comingSoon: "Em breve",
+    createRoomFailed: "Não foi possível criar a sala. Tente de novo em instantes.",
   },
   apiStatus: {
     checking: "Verificando servidor…",
