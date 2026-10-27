@@ -37,9 +37,8 @@ describe("RedisRoomStore", () => {
   it("guarda a sala e expira o link em 2 h", async () => {
     expect(await store.create(waitingRoom("abcdefghij"))).toBe(true);
     expect(await store.get("abcdefghij")).toEqual(waitingRoom("abcdefghij"));
-    const ttl = await redis.pttl("room:abcdefghij");
-    expect(ttl).toBeGreaterThan(twoHours - 60_000);
-    expect(ttl).toBeLessThanOrEqual(twoHours);
+    // PEXPIRETIME devolve o instante absoluto, então atrasos do ambiente não mudam o resultado.
+    expect(await redis.pexpiretime("room:abcdefghij")).toBe(now + twoHours);
   });
 
   it("não sobrescreve um slug que já existe", async () => {
@@ -59,9 +58,7 @@ describe("RedisRoomStore", () => {
     const expiresAt = new Date(now + twentyMinutes);
     const room = await store.start("abcdefghij", startedAt, expiresAt);
     expect(room).toMatchObject({ status: "active", startedAt, expiresAt });
-    const ttl = await redis.pttl("room:abcdefghij");
-    expect(ttl).toBeGreaterThan(twentyMinutes - 60_000);
-    expect(ttl).toBeLessThanOrEqual(twentyMinutes);
+    expect(await redis.pexpiretime("room:abcdefghij")).toBe(expiresAt.getTime());
   });
 
   it("entradas simultâneas gravam um único relógio", async () => {
