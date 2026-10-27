@@ -20,7 +20,12 @@ export const messages = {
     join: "Entrar",
     full: "A sala está cheia: o limite é de 8 pessoas.",
     joinFailed: "Não foi possível entrar. Tente de novo em instantes.",
-    joined: "Você entrou na sala.",
+    connecting: "Conectando…",
+    participants: "Participantes",
+    you: "você",
+    host: "criador",
+    leave: "Sair",
+    disconnected: "A conexão com a sala caiu. Entre de novo para voltar.",
   },
   apiStatus: {
     checking: "Verificando servidor…",
