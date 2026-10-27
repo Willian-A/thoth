@@ -43,6 +43,13 @@ module.exports = {
       to: { path: `${api}/(adapters|routes)/` },
     },
     {
+      name: "fakes-so-nos-testes",
+      comment: "As versões em memória de testing/ só servem aos testes.",
+      severity: "error",
+      from: { path: `${api}/`, pathNot: `\\.test\\.ts$|${api}/testing/` },
+      to: { path: `${api}/testing/` },
+    },
+    {
       name: "web-e-api-separados",
       severity: "error",
       from: { path: "^apps/web" },

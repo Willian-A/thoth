@@ -6,6 +6,7 @@ const configSchema = z.object({
   PORT: z.coerce.number().int().positive().default(3000),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info"),
   WEB_ORIGIN: z.string().url().default("http://localhost:5173"),
+  REDIS_URL: z.string().url().default("redis://localhost:6379"),
 });
 
 export type Config = z.infer<typeof configSchema>;
