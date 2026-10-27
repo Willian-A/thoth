@@ -56,6 +56,13 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # Serviços do Actions não aceitam argumentos, então o LiveKit sobe num passo próprio.
+      - name: Subir LiveKit
+        run: |
+          docker run -d --name livekit --network host \
+            -e LIVEKIT_KEYS="devkey: secret-de-desenvolvimento-com-32-caracteres" \
+            livekit/livekit-server:v1.13.11 --node-ip "$(hostname -I | awk '{print $1}')"
+          for i in $(seq 1 30); do curl -sf http://localhost:7880 && break; sleep 1; done
       - name: Instalar Chromium
         run: pnpm --filter @thoth/web exec playwright install --with-deps chromium
       - name: Rodar testes
@@ -66,3 +73,6 @@ jobs:
           name: playwright-report
           path: apps/web/playwright-report
           retention-days: 7
+      - name: Logs do LiveKit
+        if: failure()
+        run: docker logs livekit
